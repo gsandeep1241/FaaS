@@ -4,5 +4,5 @@ while True:
     if(cmd == "quit"):
         break;
 
-    //send cmd_parts to the FaaS service.
+    #send cmd_parts to the FaaS service.
 
