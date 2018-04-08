@@ -1,8 +1,14 @@
+import sys
+sys.path.insert(0, '../FaaS/CustomerInterface/')
+import cust_main
+
 while True:
-    cmd = raw_input("Enter your command.")
+    cmd = raw_input('Enter your command:')
 
-    if(cmd == "quit"):
-        break;
+    if cmd == "quit":
+        print ("Goodbye!")
+        break
 
-    #send cmd_parts to the FaaS service.
+    ret = cust_main.process_customer_input(cmd)
 
+    print(ret)

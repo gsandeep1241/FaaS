@@ -1,27 +1,14 @@
-connected = False
+import sys
+sys.path.insert(0, '../FaaS/DeveloperInterface/')
+import dev_main
+
 while True:
-    cmd = raw_input("Enter your command:")
-    cmd_parts = cmd.split(' ')
+    cmd = raw_input('Enter your command:')
 
-    if cmd_parts[0] == "quit":
-        break;
+    if cmd == "quit":
+        print ("Goodbye!")
+        break
 
-    if cmd_parts[0] != "connect" and  not connected :
-        print("Please first connect to the lambda service.")
-        continue
+    ret = dev_main.process_developer_input(cmd)
 
-    if cmd_parts[0] == "connect":
-        connected = True
-        continue
-
-    if cmd_parts[0] == "setup":
-        #setup account with the lambda service
-        continue
-
-    if cmd_parts[0] == "login":
-        #login to the service
-        continue
-
-    if cmd_parts[0] == "deploy":
-        #deploy files to the lamdba service
-        continue
+    print(ret)
