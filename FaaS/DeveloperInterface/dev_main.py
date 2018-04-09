@@ -1,10 +1,18 @@
 import pickle
 import sys
 import os
+import string
+import random
 
 creds_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'creds.pckl'))
 keys_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'keys.pckl'))
 
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+	return ''.join(random.choice(chars) for _ in range(size))
+
+def url_generator(size=10, chars=string.ascii_lowercase + string.digits):
+	return "www." + ''.join(random.choice(chars) for _ in range(size)) + ".com"
+	
 def process_developer_input():
 	
 	logged_in = False
@@ -52,6 +60,7 @@ def process_developer_input():
 				continue
 			
 			logged_in = True
+			current_user = username
 			
 		elif cmdps[0] == "signup" and len(cmdps) == 3:
 		
@@ -82,11 +91,27 @@ def process_developer_input():
 				print("You can not generate keys, please login first")
 				continue
 				
+			ID = id_generator()
+			while ID in keys:
+				ID = id_generator()
+				
+			URL = url_generator()
+			keys[ID] = [current_user, URL]
+			
+			print("The generated key is : " + ID + " and the associated url is : " + URL)
+				
 		elif len(cmdps) == 3 and cmdps[0] == "show" and cmdps[1] == "url":
 		
 			if logged_in == False:
 				print("You are not logged in, Please login and try")
 				continue
+				
+			key_id = cmdps[2]
+			
+			if not key_id in keys:
+				print("The entered key is wrong, check again")
+			else:
+				print("The URL associated with the provided key is : " + keys[key_id][1])
 			
 		else:
 			print("Invalid Command, enter again")
