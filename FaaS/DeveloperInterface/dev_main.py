@@ -2,7 +2,8 @@ import pickle
 import sys
 import os
 
-curr_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'creds.pckl'))
+creds_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'creds.pckl'))
+keys_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'keys.pckl'))
 
 def process_developer_input():
 	
@@ -10,12 +11,22 @@ def process_developer_input():
 	current_user = ""
 	## Loading the user credentials map
 	try:
-		with open(curr_path, 'rb') as f:
+		with open(creds_path, 'rb') as f:
 			users = pickle.load(f)
 			f.close()
 		
 	except IOError:
 		users = {}
+		
+	## Loading keys from keys map
+	## Format: {"key" : ["usr", "url"]}
+	try:
+		with open(keys_path, 'rb') as f:
+			keys = pickle.load(f)
+			f.close()
+		
+	except IOError:
+		keys = {}
 	
 	while True:
 		cmd = raw_input('Enter your command:')
@@ -80,8 +91,12 @@ def process_developer_input():
 		else:
 			print("Invalid Command, enter again")
 			
-	f = open(curr_path, 'wb')
+	f = open(creds_path, 'wb')
 	pickle.dump(users, f)
+	f.close()
+	
+	f = open(keys_path, 'wb')
+	pickle.dump(keys, f)
 	f.close()
 
 	return "Test"
