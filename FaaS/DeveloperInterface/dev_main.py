@@ -65,6 +65,18 @@ def process_developer_input():
 		elif cmdps[0] == "logout" and len(cmdps) == 1:
 			logged_in = False
 			
+		elif len(cmdps) == 2 and cmdps[0] == "generate" and cmdps[1] == "key":
+			
+			if logged_in == False:
+				print("You can not generate keys, please login first")
+				continue
+				
+		elif len(cmdps) == 3 and cmdps[0] == "show" and cmdps[1] == "url":
+		
+			if logged_in == False:
+				print("You are not logged in, Please login and try")
+				continue
+			
 		else:
 			print("Invalid Command, enter again")
 			
