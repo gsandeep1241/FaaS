@@ -6,7 +6,7 @@ curr_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'creds.pckl')
 
 def process_developer_input():
 	
-	logged_in = True
+	logged_in = False
 	current_user = ""
 	## Loading the user credentials map
 	try:
@@ -27,10 +27,26 @@ def process_developer_input():
 			break
 			
 		elif cmdps[0] == "login" and len(cmdps) == 3:
+		
+			if logged_in == True:
+				print("Logout first and try")
+				continue
+			
 			username = cmdps[1]
 			password = cmdps[2]
 			
+			if not username in users:
+				print("Username or Password is incorrect")
+				continue
+			
+			logged_in = True
+			
 		elif cmdps[0] == "signup" and len(cmdps) == 3:
+		
+			if logged_in == True:
+				print("Logout first and try")
+				continue
+		
 			username = cmdps[1]
 			password = cmdps[2]
 			
