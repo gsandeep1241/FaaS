@@ -23,6 +23,7 @@ def process_developer_input():
 		cmdps = cmd.split(" ")
 		
 		if cmdps[0] == "quit":
+		
 			print ("Goodbye!")
 			break
 			
@@ -35,7 +36,7 @@ def process_developer_input():
 			username = cmdps[1]
 			password = cmdps[2]
 			
-			if not username in users:
+			if not username in users or users[username] != password:
 				print("Username or Password is incorrect")
 				continue
 			
@@ -60,6 +61,9 @@ def process_developer_input():
 				users[username] = password
 				logged_in = True
 				current_user = username
+				
+		elif cmdps[0] == "logout" and len(cmdps) == 1:
+			logged_in = False
 			
 		else:
 			print("Invalid Command, enter again")
