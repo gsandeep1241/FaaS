@@ -1,8 +1,19 @@
+import pickle
+
 def process_developer_input():
 
 	## Loading the user credentials map
+	try:
+		with open('../FaaS/DeveloperInterface/creds.pckl', 'rb') as f:
+			users = pickle.load(f)
+			f.close()
+		
+	except IOError:
+		users = {}
 	
-
+	for k in users:
+		print(k + users[k])
+	
 	while True:
 		cmd = raw_input('Enter your command:')
 
@@ -22,5 +33,9 @@ def process_developer_input():
 			
 		else:
 			print("Invalid Command")
-		
+			
+	f = open('../FaaS/DeveloperInterface/creds.pckl', 'wb')
+	pickle.dump(users, f)
+	f.close()
+
 	return "Test"
