@@ -62,6 +62,8 @@ def process_developer_input():
 			logged_in = True
 			current_user = username
 			
+			print("User sucessfully logged in")
+			
 		elif cmdps[0] == "signup" and len(cmdps) == 3:
 		
 			if logged_in == True:
@@ -81,9 +83,11 @@ def process_developer_input():
 				users[username] = password
 				logged_in = True
 				current_user = username
+				print("User created sucessfully")
 				
 		elif cmdps[0] == "logout" and len(cmdps) == 1:
 			logged_in = False
+			print("User logged out sucessfully")
 			
 		elif len(cmdps) == 2 and cmdps[0] == "generate" and cmdps[1] == "key":
 			
