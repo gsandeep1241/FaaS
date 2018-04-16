@@ -21,11 +21,9 @@ def process_customer_input():
 		if event_object["url"] == "":
 			print("Invalid URL.")
 			continue
-		
-		if len(cmdps) == 2 and cmdps[0] == "get":
-			## initiate get request
-			# generate time stamp and place event_object in a pckl file and put it in some destination with file name as event object
-			#start a listener here to look for a file in a new location with  file name as the timestamp
+			
+		if (len(cmdps) == 2 and cmdps[0] == "get") or (len(cmdps) == 3 and cmdps[0] == "put") \
+		or (len(cmdps) == 3 and cmdps[0] == "post") or (len(cmdps) == 2 and cmdps[0] == "delete"):
 			
 			file_name = str(time.time()).strip() + '.pckl'
 			file = os.path.abspath(os.path.join(os.path.dirname(__file__),'WriteContent/' + file_name))
@@ -33,20 +31,6 @@ def process_customer_input():
 			f = open(file, 'wb')
 			pickle.dump(event_object, f)
 			f.close()
-			
-			#write listener here
-			
-		elif len(cmdps) == 3 and cmdps[0] == "put":
-			## Initiate put request
-			L = 0
-		
-		elif len(cmdps) == 3 and cmdps[0] == "post":
-			## Initiate post request
-			L = 0
-			
-		elif len(cmdps) == 2 and cmdps[0] == "delete":
-			## Initiate delete request
-			L = 0
 			
 		else:
 			print("Invalid Command, enter again")
