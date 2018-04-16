@@ -5,13 +5,6 @@ from os import listdir
 from os.path import isfile, join
 import glob
 
-import re
-numbers = re.compile(r'(\d+)')
-def numericalSort(value):
-    parts = numbers.split(value)
-    parts[1::2] = map(int, parts[1::2])
-    return parts
-
 read_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'CustomerInterface/WriteContent/'))
 
 def does_file_exist_in_dir(path):

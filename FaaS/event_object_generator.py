@@ -35,5 +35,3 @@ def generate_object(cmd):
 		dict['data'] = cmd_parts[2];
 		
 	return dict
-
-
