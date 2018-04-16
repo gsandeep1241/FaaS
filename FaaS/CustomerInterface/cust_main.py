@@ -32,6 +32,8 @@ def process_customer_input():
 			pickle.dump(event_object, f)
 			f.close()
 			
+		#write listener and print output
+			
 		else:
 			print("Invalid Command, enter again")
 
