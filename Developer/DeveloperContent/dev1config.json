@@ -1,5 +1,6 @@
 {
 	"key": "YTZRQP",
+	"token": "dogs",
 	"handlers": [
 		{
 			"type": "get",

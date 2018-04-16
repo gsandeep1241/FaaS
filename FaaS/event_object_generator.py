@@ -29,7 +29,10 @@ def generate_object(cmd):
 	dict['content_uri'] = ""
 	
 	for i in range(1, len(url_parts)):
-		dict['content_uri'] += url_parts[i] + "/"
+		if i != len(url_parts)-1:
+			dict['content_uri'] += url_parts[i] + "/"
+		else:
+			dict['content_uri'] += url_parts[i]
 	
 	if len(cmd_parts) > 2:
 		dict['data'] = cmd_parts[2];

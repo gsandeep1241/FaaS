@@ -38,35 +38,49 @@ while True:
 			
 		except IOError:
 			print("Error: Config file not found")
+			continue
 			
 		type = event_obj["type"]
 		handler = confs[type].rstrip()
 
+		content_uri = event_obj['content_uri']
+		parts = content_uri.split('/')
 		
-		if  type == "get":
-			method_to_call = getattr(main, handler)
+		if parts[0] != confs["token"].rstrip():
+			ans = "Error: Invalid URL."	
+		
+		elif  type == "get":
+			if len(parts) != 2:
+				ans = "Invalid URL"
+			else:
+				method_to_call = getattr(main, handler)
 			
-			content_uri = event_obj['content_uri']
-			parts = content_uri.split('/')
-			
-			ans = method_to_call(parts[1])
+				ans = method_to_call(parts[1])
 		
 		elif type == "put":
-			content = event_obj['data']
-			method_to_call = getattr(main, handler)
-			ans = method_to_call(content)
-		
+			if len(parts) != 2:
+				ans = "Invalid URL"
+			else:
+				content = event_obj['data']
+				
+				method_to_call = getattr(main, handler)
+				ans = method_to_call(parts[1], content)
+			
 		elif type == "post":
-			content = event_obj['data']
-			method_to_call = getattr(main, handler)
-			ans = method_to_call(content)
-			
+			if len(parts) != 1:
+				ans = "Invalid URL"
+			else:
+				content = event_obj['data']
+				method_to_call = getattr(main, handler)
+				ans = method_to_call(content)
+				
 		elif type == "delete":
-			method_to_call = getattr(main, handler)
-			content_uri = event_obj['content_uri']
-			parts = content_uri.split('/')
+			if len(parts) != 2:
+				ans = "Invalid URL"
+			else:
+				method_to_call = getattr(main, handler)
 			
-			ans = method_to_call(parts[1])
+				ans = method_to_call(parts[1])
 			
 		os.remove(file_name)
 		file_name = os.path.join(write_path, infile)

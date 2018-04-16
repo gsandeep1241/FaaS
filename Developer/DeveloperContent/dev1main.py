@@ -15,5 +15,5 @@ def get(name):
 	else:
 		return name
 
-def update(data):
+def update(name, data):
 	return data

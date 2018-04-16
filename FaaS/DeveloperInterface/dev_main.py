@@ -164,6 +164,7 @@ def process_developer_input():
 			dict = {}
 			for handler in data["handlers"]:
 				dict[handler["type"]] = handler["handler"]
+			dict["token"] = data["token"]
 			
 			pckl_path = os.path.join(new_dir_path, 'config.pckl')
 			f = open(pckl_path, 'wb')
