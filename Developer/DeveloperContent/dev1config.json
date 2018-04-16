@@ -13,13 +13,13 @@
 			"handler": "add"
 		},
 		{
-			"type": "get",
+			"type": "put",
 			"uri": "/dogs/{name}",
 			"content": "{content}",
 			"handler": "update"
 		},
 		{
-			"type": "get",
+			"type": "delete",
 			"uri": "/dogs/{name}",
 			"handler": "delete"
 		}
