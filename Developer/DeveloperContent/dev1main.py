@@ -1,5 +1,7 @@
 import pickle
 import ast
+import os
+import sys
 
 ID = "YTZRQP"
 db_base_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'../../Database/'))
@@ -28,8 +30,10 @@ def add(data):
 		
 	except StandardError:
 		return "Error: Invalid data"
+		
+	dogs[dict["name"]] = dict
 	
-	return data
+	return "Post created successfully"
 
 def delete(name):
 	init()

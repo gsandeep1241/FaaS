@@ -147,7 +147,7 @@ def process_developer_input():
 				print("Key does not exist")
 				continue
 			
-			if keys[ID] != current_user:
+			if keys[ID][0] != current_user:
 				print("Not a valid key")
 				continue
 			
