@@ -29,7 +29,7 @@ while True:
 		sys.path.insert(0, execute_path)
 		import main
 		
-		ans = ""
+		ans = "temporary return string"
 		try:
 			with open(os.path.join(execute_path, 'config.pckl'), 'rb') as f:
 				confs = pickle.load(f)
@@ -38,8 +38,9 @@ while True:
 		except IOError:
 			print("Error: Config file not found")
 			
-		print(confs)
-		
+		handler = confs[event_obj["type"]]
+		print(handler)
+			
 		os.remove(file_name)
 		file_name = os.path.join(write_path, infile)
 		f = open(file_name, 'wb')

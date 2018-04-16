@@ -39,6 +39,8 @@ def process_customer_input():
 				with open(listener_file, 'rb') as f:
 					event_obj = pickle.load(f)
 					f.close()
+					print(event_obj)
+					os.remove(listener_file)
 					break
 					
 			except IOError:
