@@ -142,8 +142,13 @@ def process_developer_input():
 				continue
 			
 			ID = cmdps[1]
+			
 			if ID not in keys:
 				print("Key does not exist")
+				continue
+			
+			if keys[ID] != current_user:
+				print("Not a valid key")
 				continue
 			
 			try:

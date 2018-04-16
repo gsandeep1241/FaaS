@@ -42,6 +42,7 @@ while True:
 			
 		type = event_obj["type"]
 		handler = confs[type].rstrip()
+		# handler = confs[type]
 
 		content_uri = event_obj['content_uri']
 		parts = content_uri.split('/')
