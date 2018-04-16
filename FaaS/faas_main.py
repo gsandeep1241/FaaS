@@ -52,9 +52,9 @@ while True:
 			ans = method_to_call(parts[1])
 		
 		elif type == "put":
-			# Do something
-			print("Put")
-
+			content = event_obj['data']
+			method_to_call = getattr(main, handler)
+			ans = method_to_call(content)
 		
 		elif type == "post":
 			content = event_obj['data']
