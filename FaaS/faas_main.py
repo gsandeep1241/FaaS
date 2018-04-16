@@ -44,8 +44,6 @@ while True:
 
 		
 		if  type == "get":
-			# Do something
-			print("Get")
 			method_to_call = getattr(main, handler)
 			
 			content_uri = event_obj['content_uri']
@@ -59,15 +57,16 @@ while True:
 
 		
 		elif type == "post":
-			# Do something
-			print("Post")
 			content = event_obj['data']
 			method_to_call = getattr(main, handler)
 			ans = method_to_call(content)
 			
 		elif type == "delete":
-			# Do something
-			print("Delete")
+			method_to_call = getattr(main, handler)
+			content_uri = event_obj['content_uri']
+			parts = content_uri.split('/')
+			
+			ans = method_to_call(parts[1])
 			
 		os.remove(file_name)
 		file_name = os.path.join(write_path, infile)

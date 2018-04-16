@@ -12,5 +12,8 @@ def get(name):
 	else:
 		return name
 
-def update(dog):
-	return ""
+def update(name):
+	if name == "all":
+		return "all"
+	else:
+		return name
