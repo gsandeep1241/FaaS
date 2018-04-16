@@ -1,3 +1,9 @@
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),'../')))
+import event_object_generator as eog
+
 def process_customer_input():
 	while True:
 		cmd = raw_input('Enter your command:')
@@ -6,9 +12,11 @@ def process_customer_input():
 			print ("Goodbye!")
 			break
 			
-		cmdps = cmds.split(" ")
+		cmdps = cmd.split(" ")
 		
 		if len(cmdps) == 2 and cmdps[0] == "get":
+			# generate event object
+			event_object = eog.generate_object(cmd)
 			## initiate get request
 			L = 0
 			
