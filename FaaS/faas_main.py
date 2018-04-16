@@ -38,8 +38,21 @@ while True:
 		except IOError:
 			print("Error: Config file not found")
 			
-		handler = confs[event_obj["type"]]
-		print(handler)
+		type = event_obj["type"]
+		handler = confs[type]
+		
+		if  type == "get":
+			# Do something
+		
+		elif type == "put":
+			# Do something
+		
+		elif type == "post":
+			# Do something
+		
+		elif type == "delete":
+			# Do something
+			
 			
 		os.remove(file_name)
 		file_name = os.path.join(write_path, infile)
