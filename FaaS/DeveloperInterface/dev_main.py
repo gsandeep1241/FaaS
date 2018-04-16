@@ -3,10 +3,15 @@ import sys
 import os
 import string
 import random
+import json
+from pprint import pprint
+
 
 creds_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'creds.pckl'))
 keys_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'keys.pckl'))
 rev_keys_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'rev_keys.pckl'))
+dev_content_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'../../Developer/DeveloperContent/'))
+dev_store_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'../Storage/'))
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for _ in range(size))
@@ -129,6 +134,22 @@ def process_developer_input():
 				print("The entered key is wrong, check again")
 			else:
 				print("The URL associated with the provided key is : " + keys[key_id][1])
+				
+		elif len(cmdps) == 4 and cmdps[0] == "deploy":
+			
+			if logged_in == False:
+				print("You are not logged in, Please login and try")
+				continue
+			
+			ID = cmdps[1]
+			if ID not in keys:
+				print("Key does not exist")
+				continue
+			
+			with open(os.path.join(dev_content_path,cmdps[3])) as data_file:
+				data = json.load(data_file)
+			
+			
 			
 		else:
 			print("Invalid Command, enter again")

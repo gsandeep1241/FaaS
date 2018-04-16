@@ -1,0 +1,27 @@
+{
+	"key": "YTZRQP",
+	"handlers": [
+		{
+			"type": "get",
+			"uri": "/dogs/{name}",
+			"handler": "get"
+		},
+		{
+			"type": "post",
+			"uri": "/dogs",
+			"content": "{content}",
+			"handler": "add"
+		},
+		{
+			"type": "get",
+			"uri": "/dogs/{name}",
+			"content": "{content}",
+			"handler": "update"
+		},
+		{
+			"type": "get",
+			"uri": "/dogs/{name}",
+			"handler": "delete"
+		}
+	]
+}
