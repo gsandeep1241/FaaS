@@ -15,8 +15,13 @@ def process_customer_input():
 		cmdps = cmd.split(" ")
 		event_object = eog.generate_object(cmd)
 		
+		if event_object["url"] == "":
+			print("Invalid URL.")
+			continue
+		
 		if len(cmdps) == 2 and cmdps[0] == "get":
 			# generate event object
+			event_object = eog.generate_object(cmd)
 			## initiate get request
 			L = 0
 			
