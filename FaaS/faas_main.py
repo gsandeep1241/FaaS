@@ -27,6 +27,7 @@ while True:
 		execute_base_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'Storage'))
 		execute_path = os.path.join(execute_base_path, ID)
 		sys.path.insert(0, execute_path)
+		
 		import main
 		
 		ans = "temporary return string"
@@ -39,20 +40,23 @@ while True:
 			print("Error: Config file not found")
 			
 		type = event_obj["type"]
-		handler = confs[type]
+		handler = confs[type].rstrip()
 		
 		if  type == "get":
 			# Do something
+			print("Get")
 		
 		elif type == "put":
 			# Do something
+			print("Put")
 		
 		elif type == "post":
 			# Do something
-		
+			print("Post")
+			
 		elif type == "delete":
 			# Do something
-			
+			print("Delete")
 			
 		os.remove(file_name)
 		file_name = os.path.join(write_path, infile)
