@@ -6,6 +6,7 @@ import random
 
 creds_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'creds.pckl'))
 keys_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'keys.pckl'))
+rev_keys_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'rev_keys.pckl'))
 
 def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for _ in range(size))
@@ -35,6 +36,17 @@ def process_developer_input():
 		
 	except IOError:
 		keys = {}
+		
+	## Loading reverse-keys from rev-keys map
+	## Format: {"url" : ["usr", "key"]}
+	try:
+		with open(rev_keys_path, 'rb') as f:
+			rev_keys = pickle.load(f)
+			f.close()
+		
+	except IOError:
+		rev_keys = {}
+	
 	
 	while True:
 		cmd = raw_input('Enter your command:')
@@ -101,6 +113,7 @@ def process_developer_input():
 				
 			URL = url_generator()
 			keys[ID] = [current_user, URL]
+			rev_keys[URL] = [current_user, ID]
 			
 			print("The generated key is : " + ID + " and the associated url is : " + URL)
 				
@@ -127,5 +140,11 @@ def process_developer_input():
 	f = open(keys_path, 'wb')
 	pickle.dump(keys, f)
 	f.close()
+	
+	f = open(rev_keys_path, 'wb')
+	pickle.dump(rev_keys, f)
+	f.close()
+	
+	
 
 	return "Test"

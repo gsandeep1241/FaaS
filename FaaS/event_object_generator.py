@@ -1,5 +1,5 @@
 def generate_object(cmd):
-	print "Object generation"
+	cmd_parts = cmd.split(" ")
 
 
 
