@@ -1,4 +1,4 @@
-import pickle
+import cPickle as pickle
 import sys
 import os
 from os import listdir

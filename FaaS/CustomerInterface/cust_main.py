@@ -2,7 +2,7 @@ import sys
 import os
 import datetime
 import time
-import pickle
+import cPickle as pickle
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),'../')))
 import event_object_generator as eog
@@ -33,6 +33,17 @@ def process_customer_input():
 			f.close()
 			
 		#write listener and print output
+		while True:
+			listener_file = os.path.abspath(os.path.join(os.path.dirname(__file__),'ReadContent/' + file_name))
+			try:
+				with open(listener_file, 'rb') as f:
+					event_obj = pickle.load(f)
+					f.close()
+					break
+					
+			except IOError:
+				time.sleep(1)
+				continue
 			
 		else:
 			print("Invalid Command, enter again")
