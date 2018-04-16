@@ -5,7 +5,7 @@ import string
 import random
 import json
 from pprint import pprint
-
+from shutil import copyfile
 
 creds_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'creds.pckl'))
 keys_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'keys.pckl'))
@@ -146,11 +146,29 @@ def process_developer_input():
 				print("Key does not exist")
 				continue
 			
-			with open(os.path.join(dev_content_path,cmdps[3])) as data_file:
-				data = json.load(data_file)
+			try:
+				with open(os.path.join(dev_content_path,cmdps[3])) as data_file:
+					data = json.load(data_file)
 			
+			except StandardError:
+				print("Configuration file error")
+				
+			new_dir_path = os.path.join(dev_store_path, ID) 
 			
+			if not os.path.exists(new_dir_path):
+				os.makedirs(new_dir_path)
+				
+			copyfile(os.path.join(dev_content_path, cmdps[2]), os.path.join(new_dir_path, "main.py"))
 			
+			dict = {}
+			for handler in data["handlers"]:
+				dict[handler["type"]] = handler["handler"]
+			
+			pckl_path = os.path.join(new_dir_path, 'config.pckl')
+			f = open(pckl_path, 'wb')
+			pickle.dump(dict, f)
+			f.close()
+					
 		else:
 			print("Invalid Command, enter again")
 			
