@@ -1,6 +1,8 @@
 import sys
 import os
 import datetime
+import time
+import pickle
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__),'../')))
 import event_object_generator as eog
@@ -25,8 +27,8 @@ def process_customer_input():
 			# generate time stamp and place event_object in a pckl file and put it in some destination with file name as event object
 			#start a listener here to look for a file in a new location with  file name as the timestamp
 			
-			file_name = str(datetime.datetime.now()) + '.pckl'
-			file = os.path.abspath(os.path.join(os.path.dirname(__file__),'WriteContent/' + filename))
+			file_name = str(time.time()).strip() + '.pckl'
+			file = os.path.abspath(os.path.join(os.path.dirname(__file__),'WriteContent/' + file_name))
 			
 			f = open(file, 'wb')
 			pickle.dump(event_object, f)

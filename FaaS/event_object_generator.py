@@ -25,7 +25,7 @@ def generate_object(cmd):
 	if url_parts[0] not in rev_keys:
 		return {"url": ""}
 	
-	dict['key'] = rev_keys['url_parts[0]'][1]
+	dict['key'] = rev_keys[url_parts[0]][1]
 	dict['content_uri'] = ""
 	
 	for i in range(1, len(url_parts)):
