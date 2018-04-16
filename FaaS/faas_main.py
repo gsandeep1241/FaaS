@@ -23,6 +23,13 @@ while True:
 			event_obj = pickle.load(f)
 			f.close()
 			
+		ID = event_obj['key']
+		execute_base_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'Storage'))
+		execute_path = os.path.join(execute_base_path, ID)
+		sys.insert(0, execute_path)
+		import main
+		
+		
 		os.remove(file_name)
 		file_name = os.path.join(write_path, infile)
 		f = open(file_name, 'wb')
