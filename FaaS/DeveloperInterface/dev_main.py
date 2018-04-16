@@ -152,6 +152,7 @@ def process_developer_input():
 			
 			except StandardError:
 				print("Configuration file error")
+				continue
 				
 			new_dir_path = os.path.join(dev_store_path, ID) 
 			

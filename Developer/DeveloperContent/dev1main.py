@@ -1,13 +1,16 @@
 import pickle
 
-def add(dog):
-	return ""
+def add(data):
+	return data
 
 def delete(dog):
 	return ""
 
-def get(dog):
-	return ""
+def get(name):
+	if name == "all":
+		return "all"
+	else:
+		return name
 
 def update(dog):
 	return ""

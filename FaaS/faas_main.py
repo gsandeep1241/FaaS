@@ -41,18 +41,29 @@ while True:
 			
 		type = event_obj["type"]
 		handler = confs[type].rstrip()
+
 		
 		if  type == "get":
 			# Do something
 			print("Get")
+			method_to_call = getattr(main, handler)
+			
+			content_uri = event_obj['content_uri']
+			parts = content_uri.split('/')
+			
+			ans = method_to_call(parts[1])
 		
 		elif type == "put":
 			# Do something
 			print("Put")
+
 		
 		elif type == "post":
 			# Do something
 			print("Post")
+			content = event_obj['data']
+			method_to_call = getattr(main, handler)
+			ans = method_to_call(content)
 			
 		elif type == "delete":
 			# Do something
@@ -66,4 +77,3 @@ while True:
 		print(infile + " file removed")
 		break
 		
-	break
