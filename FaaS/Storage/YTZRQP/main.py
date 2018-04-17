@@ -4,7 +4,7 @@ import os
 import sys
 
 ID = "YTZRQP"
-db_base_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'../../Database/'))
+db_base_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'../../../Database/'))
 db_path = os.path.join(db_base_path, (ID+'.pckl'))
 
 dogs = {}
@@ -33,6 +33,7 @@ def add(data):
 		
 	dogs[dict["name"]] = dict
 	
+	dest()
 	return "Post created successfully"
 
 def delete(name):
@@ -45,9 +46,9 @@ def delete(name):
 def get(name):
 	init()
 	if name == "all":
-		return "all"
+		return dogs
 	else:
-		return name
+		return dogs[name]
 
 def update(name, data):
 	init()
