@@ -10,6 +10,7 @@ db_path = os.path.join(db_base_path, (ID+'.pckl'))
 dogs = {}
 
 def init():
+	global dogs
 	try:
 		with open(db_path, 'rb') as f:
 			dogs = pickle.load(f)
@@ -19,11 +20,13 @@ def init():
 		dogs = {}
 
 def dest():
+	global dogs
 	f = open(db_path, 'wb')
 	pickle.dump(dogs, f)
 	f.close()
 
 def add(data):
+	global dogs
 	init()
 	try:
 		dict = ast.literal_eval(data)
@@ -37,19 +40,28 @@ def add(data):
 	return "Post created successfully"
 
 def delete(name):
+	global dogs
 	init()
 	if name == "all":
-		return "all"
+		dogs = {}
 	else:
-		return name
+		if name not in dogs:
+			return "Name not found"
+		del dogs[name]
+	dest()
+	return "Deleted successfully"
 
 def get(name):
+	global dogs
 	init()
 	if name == "all":
 		return dogs
 	else:
+		if name not in dogs:
+			return "Name not found"
 		return dogs[name]
 
 def update(name, data):
+	global dogs
 	init()
 	return data
