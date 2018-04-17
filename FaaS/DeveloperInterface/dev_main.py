@@ -163,6 +163,9 @@ def process_developer_input():
 			
 			if not os.path.exists(new_dir_path):
 				os.makedirs(new_dir_path)
+			else:
+				for filename in os.listdir(new_dir_path):
+					os.remove(os.path.join(new_dir_path, filename))
 				
 			copyfile(os.path.join(dev_content_path, cmdps[2]), os.path.join(new_dir_path, "main.py"))
 			
