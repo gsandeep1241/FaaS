@@ -66,14 +66,14 @@ def process_developer_input():
 		elif cmdps[0] == "login" and len(cmdps) == 3:
 		
 			if logged_in == True:
-				print("Logout first and try")
+				print("Error: Logout first and try")
 				continue
 			
 			username = cmdps[1]
 			password = cmdps[2]
 			
 			if not username in users or users[username] != password:
-				print("Username or Password is incorrect")
+				print("Error: Username or Password is incorrect")
 				continue
 			
 			logged_in = True
@@ -84,17 +84,17 @@ def process_developer_input():
 		elif cmdps[0] == "signup" and len(cmdps) == 3:
 		
 			if logged_in == True:
-				print("Logout first and try")
+				print("Error: Logout first and try")
 				continue
 		
 			username = cmdps[1]
 			password = cmdps[2]
 			
 			if username in users:
-				print("Username already exists, enter again")
+				print("Error: Username already exists, enter again")
 			
 			elif len(password) < 5:
-				print("Password is too short, enter again")
+				print("Error: Password is too short, enter again")
 				
 			else:
 				users[username] = password
@@ -109,7 +109,7 @@ def process_developer_input():
 		elif len(cmdps) == 2 and cmdps[0] == "generate" and cmdps[1] == "key":
 			
 			if logged_in == False:
-				print("You can not generate keys, please login first")
+				print("Error: You can not generate keys, please login first")
 				continue
 				
 			ID = id_generator()
@@ -125,30 +125,30 @@ def process_developer_input():
 		elif len(cmdps) == 3 and cmdps[0] == "show" and cmdps[1] == "url":
 		
 			if logged_in == False:
-				print("You are not logged in, Please login and try")
+				print("Error: You are not logged in, Please login and try")
 				continue
 				
 			key_id = cmdps[2]
 			
 			if not key_id in keys:
-				print("The entered key is wrong, check again")
+				print("Error: The entered key is wrong, check again")
 			else:
 				print("The URL associated with the provided key is : " + keys[key_id][1])
 				
 		elif len(cmdps) == 4 and cmdps[0] == "deploy":
 			
 			if logged_in == False:
-				print("You are not logged in, Please login and try")
+				print("Error: You are not logged in, Please login and try")
 				continue
 			
 			ID = cmdps[1]
 			
 			if ID not in keys:
-				print("Key does not exist")
+				print("Error: Key does not exist")
 				continue
 			
 			if keys[ID][0] != current_user:
-				print("Not a valid key")
+				print("Error: Key does not exist")
 				continue
 			
 			try:
@@ -156,7 +156,7 @@ def process_developer_input():
 					data = json.load(data_file)
 			
 			except StandardError:
-				print("Configuration file error")
+				print("Error: Configuration file error")
 				continue
 				
 			new_dir_path = os.path.join(dev_store_path, ID) 
@@ -170,6 +170,9 @@ def process_developer_input():
 			copyfile(os.path.join(dev_content_path, cmdps[2]), os.path.join(new_dir_path, "main.py"))
 			
 			dict = {}
+			if data.get("token") == None:
+				print("Error: Configuration file error. Token missing")
+				continue
 			for handler in data["handlers"]:
 				dict[handler["type"]] = handler["handler"]
 			dict["token"] = data["token"]
@@ -180,7 +183,7 @@ def process_developer_input():
 			f.close()
 					
 		else:
-			print("Invalid Command, enter again")
+			print("Error: Invalid Command")
 			
 	f = open(creds_path, 'wb')
 	pickle.dump(users, f)

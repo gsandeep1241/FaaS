@@ -16,10 +16,12 @@ def process_customer_input():
 			break
 			
 		cmdps = cmd.split(" ")
+		if len(cmdps) < 2:
+			print("Error: Invalid URL")
 		event_object = eog.generate_object(cmd)
 		
 		if event_object["url"] == "":
-			print("Invalid URL.")
+			print("Error: Invalid URL.")
 			continue
 			
 		if (len(cmdps) == 2 and cmdps[0] == "get") or (len(cmdps) == 3 and cmdps[0] == "put") \
@@ -48,6 +50,6 @@ def process_customer_input():
 				continue
 			
 		else:
-			print("Invalid Command, enter again")
+			print("Error: Invalid Command")
 
 	return "Test"
