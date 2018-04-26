@@ -4,6 +4,7 @@ import os
 from os import listdir
 from os.path import isfile, join
 import glob
+import importlib
 
 read_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'CustomerInterface/WriteContent/'))
 write_path = os.path.abspath(os.path.join(os.path.dirname(__file__),'CustomerInterface/ReadContent/'))
@@ -28,7 +29,10 @@ while True:
 		execute_path = os.path.join(execute_base_path, ID)
 		sys.path.insert(0, execute_path)
 		
-		import main
+		if not os.path.isfile(os.path.join(execute_path, ID+'.py')):
+			print("Error: URL has been taken down.")
+			continue
+		main1 = importlib.import_module(ID, package=None)
 		
 		ans = "temporary return string"
 		try:
@@ -38,11 +42,11 @@ while True:
 			
 		except IOError:
 			print("Error: Config file not found")
+			sys.path.remove(0, execute_path)
 			continue
 			
 		type = event_obj["type"]
 		handler = confs[type].rstrip()
-		# handler = confs[type]
 
 		content_uri = event_obj['content_uri']
 		parts = content_uri.split('/')
@@ -54,7 +58,7 @@ while True:
 			if len(parts) != 2:
 				ans = "Invalid URL"
 			else:
-				method_to_call = getattr(main, handler)
+				method_to_call = getattr(main1, handler)
 			
 				ans = method_to_call(parts[1])
 		
@@ -64,7 +68,7 @@ while True:
 			else:
 				content = event_obj['data']
 				
-				method_to_call = getattr(main, handler)
+				method_to_call = getattr(main1, handler)
 				ans = method_to_call(parts[1], content)
 			
 		elif type == "post":
@@ -72,14 +76,14 @@ while True:
 				ans = "Invalid URL"
 			else:
 				content = event_obj['data']
-				method_to_call = getattr(main, handler)
+				method_to_call = getattr(main1, handler)
 				ans = method_to_call(content)
 				
 		elif type == "delete":
 			if len(parts) != 2:
 				ans = "Invalid URL"
 			else:
-				method_to_call = getattr(main, handler)
+				method_to_call = getattr(main1, handler)
 			
 				ans = method_to_call(parts[1])
 			
@@ -88,6 +92,7 @@ while True:
 		f = open(file_name, 'wb')
 		pickle.dump(ans, f)
 		f.close()
-		print(infile + " file removed")
+		sys.path.remove(execute_path)
+		print("Command execution succesful!")
 		break
 		

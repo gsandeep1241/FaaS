@@ -17,7 +17,8 @@ def process_customer_input():
 			
 		cmdps = cmd.split(" ")
 		if len(cmdps) < 2:
-			print("Error: Invalid URL")
+			print("Error: Invalid Command")
+			continue
 		event_object = eog.generate_object(cmd)
 		
 		if event_object["url"] == "":
@@ -34,20 +35,20 @@ def process_customer_input():
 			pickle.dump(event_object, f)
 			f.close()
 			
-		#write listener and print output
-		while True:
-			listener_file = os.path.abspath(os.path.join(os.path.dirname(__file__),'ReadContent/' + file_name))
-			try:
-				with open(listener_file, 'rb') as f:
-					event_obj = pickle.load(f)
-					f.close()
-					print(event_obj)
-					os.remove(listener_file)
-					break
-					
-			except IOError:
-				time.sleep(1)
-				continue
+			#write listener and print output
+			while True:
+				listener_file = os.path.abspath(os.path.join(os.path.dirname(__file__),'ReadContent/' + file_name))
+				try:
+					with open(listener_file, 'rb') as f:
+						event_obj = pickle.load(f)
+						f.close()
+						print(event_obj)
+						os.remove(listener_file)
+						break
+						
+				except IOError:
+					time.sleep(1)
+					continue
 			
 		else:
 			print("Error: Invalid Command")

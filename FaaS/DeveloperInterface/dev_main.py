@@ -24,33 +24,7 @@ def process_developer_input():
 	logged_in = False
 	current_user = ""
 	## Loading the user credentials map
-	try:
-		with open(creds_path, 'rb') as f:
-			users = pickle.load(f)
-			f.close()
-		
-	except IOError:
-		users = {}
-		
-	## Loading keys from keys map
-	## Format: {"key" : ["usr", "url"]}
-	try:
-		with open(keys_path, 'rb') as f:
-			keys = pickle.load(f)
-			f.close()
-		
-	except IOError:
-		keys = {}
-		
-	## Loading reverse-keys from rev-keys map
-	## Format: {"url" : ["usr", "key"]}
-	try:
-		with open(rev_keys_path, 'rb') as f:
-			rev_keys = pickle.load(f)
-			f.close()
-		
-	except IOError:
-		rev_keys = {}
+	
 	
 	
 	while True:
@@ -58,7 +32,48 @@ def process_developer_input():
 
 		cmdps = cmd.split(" ")
 		
+		
+		try:
+			with open(creds_path, 'rb') as f:
+				users = pickle.load(f)
+				f.close()
+			
+		except IOError:
+			users = {}
+			
+		## Loading keys from keys map
+		## Format: {"key" : ["usr", "url"]}
+		try:
+			with open(keys_path, 'rb') as f:
+				keys = pickle.load(f)
+				f.close()
+			
+		except IOError:
+			keys = {}
+			
+		## Loading reverse-keys from rev-keys map
+		## Format: {"url" : ["usr", "key"]}
+		try:
+			with open(rev_keys_path, 'rb') as f:
+				rev_keys = pickle.load(f)
+				f.close()
+			
+		except IOError:
+			rev_keys = {}
+		
 		if cmdps[0] == "quit":
+		
+			f = open(creds_path, 'wb')
+			pickle.dump(users, f)
+			f.close()
+			
+			f = open(keys_path, 'wb')
+			pickle.dump(keys, f)
+			f.close()
+			
+			f = open(rev_keys_path, 'wb')
+			pickle.dump(rev_keys, f)
+			f.close()
 		
 			print ("Goodbye!")
 			break
@@ -159,6 +174,10 @@ def process_developer_input():
 				print("Error: Configuration file error")
 				continue
 				
+			if (not os.path.isfile(os.path.join(dev_content_path,cmdps[2]))):
+				print("Error: Python file does not exist")
+				continue
+				
 			new_dir_path = os.path.join(dev_store_path, ID) 
 			
 			if not os.path.exists(new_dir_path):
@@ -167,7 +186,7 @@ def process_developer_input():
 				for filename in os.listdir(new_dir_path):
 					os.remove(os.path.join(new_dir_path, filename))
 				
-			copyfile(os.path.join(dev_content_path, cmdps[2]), os.path.join(new_dir_path, "main.py"))
+			copyfile(os.path.join(dev_content_path, cmdps[2]), os.path.join(new_dir_path, ID + '.py'))
 			
 			dict = {}
 			if data.get("token") == None:
@@ -181,22 +200,24 @@ def process_developer_input():
 			f = open(pckl_path, 'wb')
 			pickle.dump(dict, f)
 			f.close()
+			
+			print("Deployed!")
 					
 		else:
 			print("Error: Invalid Command")
 			
-	f = open(creds_path, 'wb')
-	pickle.dump(users, f)
-	f.close()
 	
-	f = open(keys_path, 'wb')
-	pickle.dump(keys, f)
-	f.close()
-	
-	f = open(rev_keys_path, 'wb')
-	pickle.dump(rev_keys, f)
-	f.close()
-	
+		f = open(creds_path, 'wb')
+		pickle.dump(users, f)
+		f.close()
+		
+		f = open(keys_path, 'wb')
+		pickle.dump(keys, f)
+		f.close()
+		
+		f = open(rev_keys_path, 'wb')
+		pickle.dump(rev_keys, f)
+		f.close()
 	
 
 	return "Test"
