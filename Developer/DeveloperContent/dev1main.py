@@ -34,6 +34,9 @@ def add(data):
 	except StandardError:
 		return "Error: Invalid data"
 		
+	if dict.get("name") == None:
+		return "Error: Invalid data"
+	
 	if dict["name"] == "all":
 		return "Can't use the name 'all'."
 	dogs[dict["name"]] = dict
@@ -69,7 +72,18 @@ def update(name, data):
 	
 	if name not in dogs:
 		return "Name not found"
-	dogs[name] = ast.literal_eval(data)
+		
+	try:
+		dict = ast.literal_eval(data)
+		
+	except StandardError:
+		return "Error: Invalid data"
+	del dogs[name]
+	
+	if dict["name"] == "all":
+		return "Can't use the name 'all'."
+	
+	dogs[dict["name"]] = dict
 	
 	dest()
 	return data
