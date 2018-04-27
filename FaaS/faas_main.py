@@ -15,7 +15,7 @@ def does_file_exist_in_dir(path):
 while True:
 	if not does_file_exist_in_dir(read_path):
 		continue
-	
+		
 	file_name = ""
 	for infile in sorted(os.listdir(read_path)):
 		file_name = os.path.join(read_path, infile)
@@ -45,47 +45,52 @@ while True:
 			sys.path.remove(0, execute_path)
 			continue
 			
-		type = event_obj["type"]
-		handler = confs[type].rstrip()
+		try:
+			
+			type = event_obj["type"]
+			handler = confs[type].rstrip()
 
-		content_uri = event_obj['content_uri']
-		parts = content_uri.split('/')
-		
-		if parts[0] != confs["token"].rstrip():
-			ans = "Error: Invalid URL."	
-		
-		elif  type == "get":
-			if len(parts) != 2:
-				ans = "Invalid URL"
-			else:
-				method_to_call = getattr(main1, handler)
+			content_uri = event_obj['content_uri']
+			parts = content_uri.split('/')
 			
-				ans = method_to_call(parts[1])
-		
-		elif type == "put":
-			if len(parts) != 2:
-				ans = "Invalid URL"
-			else:
-				content = event_obj['data']
+			if parts[0] != confs["token"].rstrip():
+				ans = "Error: Invalid URL."	
+			
+			elif  type == "get":
+				if len(parts) != 2:
+					ans = "Invalid URL"
+				else:
+					method_to_call = getattr(main1, handler)
 				
-				method_to_call = getattr(main1, handler)
-				ans = method_to_call(parts[1], content)
+					ans = method_to_call(parts[1])
 			
-		elif type == "post":
-			if len(parts) != 1:
-				ans = "Invalid URL"
-			else:
-				content = event_obj['data']
-				method_to_call = getattr(main1, handler)
-				ans = method_to_call(content)
+			elif type == "put":
+				if len(parts) != 2:
+					ans = "Invalid URL"
+				else:
+					content = event_obj['data']
+					
+					method_to_call = getattr(main1, handler)
+					ans = method_to_call(parts[1], content)
 				
-		elif type == "delete":
-			if len(parts) != 2:
-				ans = "Invalid URL"
-			else:
-				method_to_call = getattr(main1, handler)
-			
-				ans = method_to_call(parts[1])
+			elif type == "post":
+				if len(parts) != 1:
+					ans = "Invalid URL"
+				else:
+					content = event_obj['data']
+					method_to_call = getattr(main1, handler)
+					ans = method_to_call(content)
+					
+			elif type == "delete":
+				if len(parts) != 2:
+					ans = "Invalid URL"
+				else:
+					method_to_call = getattr(main1, handler)
+				
+					ans = method_to_call(parts[1])
+					
+		except:
+			ans = "Error: Application does not support the operation. Contact developer."
 			
 		os.remove(file_name)
 		file_name = os.path.join(write_path, infile)
